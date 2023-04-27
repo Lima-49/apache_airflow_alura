@@ -5,7 +5,26 @@ Boston from an API.
 
 from datetime import datetime, timedelta
 import os
+import configparser
 import pandas as pd
+
+def get_config_data(field, data_field):
+    """
+    This function reads a specific field and data from a configuration file and returns the data.
+    
+    :param field: The section name in the config file where the data is located
+    :param data: The value of the specific field in the config file that is being requested
+    :return: the value of the specified data field from the config file.
+    """
+
+    #Open config file
+    arq = configparser.RawConfigParser()
+    arq.read('config.txt')
+
+    #get data
+    config_data = arq.get(field, data_field)
+
+    return config_data
 
 # date range
 start_date = datetime.today()
@@ -17,7 +36,7 @@ end_date = end_date.strftime('%Y-%m-%d')
 
 # Inicializating API variables
 CITY = 'SaoPaulo'
-API_KEY = 'A2TA7636P5NUXA5RL69PDE4AK'
+API_KEY = get_config_data('API', 'key')
 api_url = ("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" +
             f"{CITY}/{start_date}/{end_date}" + "?unitGroup=metric&include=days" +
             f"&key={API_KEY}&contentType=csv")
