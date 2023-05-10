@@ -1,3 +1,5 @@
-venv
+venv2
 files
 config.txt
+plugins
+logs
